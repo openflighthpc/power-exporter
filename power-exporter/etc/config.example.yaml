@@ -1,0 +1,61 @@
+# Add the schedulers you wish to enable here
+# and set enabled: true
+scheduler:
+  # No scheduler - removes the state label from compute nodes.
+  noop:
+    enabled: true
+  # Slurm scheduler
+  slurm:
+    enabled: false
+    schedulers:
+      # Scheduler host names
+      infra02:
+        # Override the path to sinfo
+        sinfo_bin: sinfo
+  # Sun engine scheduler
+  gridengine:
+    enabled: false
+    schedulers:
+      # Scheduler hostnames
+      infra02:
+        # Override the path to qhost
+        qhost_bin: qhost
+  # PBS scheduler
+  pbs:   
+    enabled: false
+    schedulers:
+      # Scheduler host names
+      infra02:
+        # Override the path to pbsnodes
+        pbsnodes_bin: pbsnodes
+  # Openstack
+  openstack:
+    enabled: false
+    clouds:
+      # Cloud name
+      example:
+        # Keystone v3 endpoint url
+        keystone_endpoint: https://openstack.example.alces.network/keystone/v3
+        # Nova v2.1 endpoint url
+        nova_endpoint: https://openstack.example.alces.network/nova/v2.1
+        # Admin user
+        username: admin
+        # Admin password
+        password: admin
+methods:
+  # Default ipmi login
+  ipmi:
+    user: admin
+    password: admin
+  # Default snmpv2 community
+  snmpv2:
+    community: public
+  # Default snmpv3 user
+  snmpv3:
+    username: admin
+logging:
+  # Path to log file
+  path: log/power-exporter.log
+exporter:
+  # Port to run the exporter
+  port: 9106

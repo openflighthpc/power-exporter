@@ -1,0 +1,14 @@
+[Unit]
+Description=Power Usage Exporter service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/power-exporter
+ExecStart=/usr/bin/ruby /opt/power-exporter/bin/exporter.rb
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
