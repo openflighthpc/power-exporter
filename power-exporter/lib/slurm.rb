@@ -14,9 +14,9 @@ module SLURM
 
 			# Grab all of the current node states
                         if $CONFIG.key?('exporter') and $CONFIG['exporter'].key?('ssh_key') ; then
-                          sinfo_output = `ssh -i #{$CONFIG['exporter']['ssh_key']} #{scheduler} "#{sinfo_bin} -N -O NODELIST,StateLong -h | sort | uniq" 2>/dev/null`
+                          sinfo_output = `ssh -o "StrictHostKeyChecking no" -i #{$CONFIG['exporter']['ssh_key']} #{scheduler} "#{sinfo_bin} -N -O NODELIST,StateLong -h | sort | uniq" 2>/dev/null`
                         else
-    			  sinfo_output = `ssh #{scheduler} "#{sinfo_bin} -N -O NODELIST,StateLong -h | sort | uniq" 2>/dev/null`
+    			  sinfo_output = `ssh -o "StrictHostKeyChecking no" #{scheduler} "#{sinfo_bin} -N -O NODELIST,StateLong -h | sort | uniq" 2>/dev/null`
                         end
 
 			if sinfo_output == "" ; then

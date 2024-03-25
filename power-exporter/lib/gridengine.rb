@@ -11,9 +11,9 @@ module GRIDENGINE
 
 			# Grab qhost xml output
                         if $CONFIG.key?('exporter') and $CONFIG['exporter'].key?('ssh_key') ; then
-			  qhost_output = `ssh -i #{$CONFIG['exporter']['ssh_key']} #{scheduler} "#{qhost_bin} -j -xml" 2>/dev/null`
+			  qhost_output = `ssh -o "StrictHostKeyChecking no" -i #{$CONFIG['exporter']['ssh_key']} #{scheduler} "#{qhost_bin} -j -xml" 2>/dev/null`
                         else
-                          qhost_output = `ssh #{scheduler} "#{qhost_bin} -j -xml" 2>/dev/null`
+                          qhost_output = `ssh -o "StrictHostKeyChecking no" #{scheduler} "#{qhost_bin} -j -xml" 2>/dev/null`
                         end
 
 			# Convert to xml

@@ -8,9 +8,9 @@ module PBS
                         pbsnodes_bin = config.key?('pbsnodes_bin') ? config['pbsnodes_bin'] : "pbsnodes"
 
                         if $CONFIG.key?('exporter') and $CONFIG['exporter'].key?('ssh_key') ; then
-                          pbs_output = `ssh -i #{$CONFIG['exporter']['ssh_key']} #{scheduler} "#{pbsnodes_bin} -aSj -F json" 2>/dev/null`
+                          pbs_output = `ssh -o "StrictHostKeyChecking no" -i #{$CONFIG['exporter']['ssh_key']} #{scheduler} "#{pbsnodes_bin} -aSj -F json" 2>/dev/null`
                         else
-  			  pbs_output = `ssh #{scheduler} "#{pbsnodes_bin} -aSj -F json" 2>/dev/null`
+  			  pbs_output = `ssh -o "StrictHostKeyChecking no" #{scheduler} "#{pbsnodes_bin} -aSj -F json" 2>/dev/null`
                         end
 
 			# Convert to JSON
