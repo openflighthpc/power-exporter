@@ -13,7 +13,11 @@ module SLURM
 			sinfo_bin = config.key?('sinfo_bin') ? config['sinfo_bin'] : "/usr/bin/sinfo"
 
 			# Grab all of the current node states
-			sinfo_output = `pdsh -N -w #{scheduler} "#{sinfo_bin} -N -O NODELIST,StateLong -h | sort | uniq" 2>/dev/null`
+                        if $CONFIG.key?('exporter') and $CONFIG['exporter'].key?('ssh_key') ; then
+                          sinfo_output = `ssh -i #{$CONFIG['exporter']['ssh_key']} #{scheduler} "#{sinfo_bin} -N -O NODELIST,StateLong -h | sort | uniq" 2>/dev/null`
+                        else
+    			  sinfo_output = `ssh #{scheduler} "#{sinfo_bin} -N -O NODELIST,StateLong -h | sort | uniq" 2>/dev/null`
+                        end
 
 			if sinfo_output == "" ; then
 				$log.error "Failed to get slurm sinfo output from #{scheduler}"

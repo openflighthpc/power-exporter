@@ -59,3 +59,5 @@ logging:
 exporter:
   # Port to run the exporter
   port: 9106
+  # SSH key file to use
+  ssh_key: etc/id_powerexporter

@@ -12,7 +12,11 @@ module IPMI_SSH
                 end
 
 	        # Get ipmitool sensor output from the host
-                ipmitool_output = `ssh #{host} "/usr/bin/sudo /usr/bin/ipmitool sensor list" 2>/dev/null`
+                if $CONFIG.key?('exporter') and $CONFIG['exporter'].key?('ssh_key') ; then
+                  ipmitool_output = `ssh -i #{$CONFIG['exporter']['ssh_key']} #{host} "/usr/bin/sudo /usr/bin/ipmitool sensor list" 2>/dev/null`
+                else
+                  ipmitool_output = `ssh #{host} "/usr/bin/sudo /usr/bin/ipmitool sensor list" 2>/dev/null`
+                end
 
 		if ipmitool_output == "" ; then
 			return nil

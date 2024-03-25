@@ -47,6 +47,12 @@ Install the required Ruby gems.
 cd /opt/power-exporter
 /path/to/bundle install
 ```
+
+Create an SSH key in `/opt/power-exporter/etc/id_powerexporter` for the exporter to use. The public key will need to be added to the `authorized_keys` file of the same user on the relevant hosts.
+```
+ssh-keygen -q -t rsa -N '' -f /opt/power-exporter/etc/id_powerexporter
+```
+
 Configure `/opt/power-exporter/etc/config.yaml` - an example configuration file is provided with a brief explanation of the various configuration parameters.
 
 Minimal configuration example:
@@ -71,6 +77,7 @@ logging:
   path: log/power-exporter.log
 exporter:
   port: 9106
+  ssh_key: etc/id_powerexporter
 ```
 
 Configure `/opt/power-exporter/etc/nodes.yaml` - an example file is provided with various examples and a brief explanation of the various configuration parameters.
