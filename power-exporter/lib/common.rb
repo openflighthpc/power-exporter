@@ -10,6 +10,7 @@ require_relative 'ipmi.rb'
 require_relative 'snmpv2.rb'
 require_relative 'snmpv3.rb'
 require_relative 'ipmi_ssh.rb'
+require_relative 'fake.rb'
 
 require_relative 'slurm.rb'
 require_relative 'pbs.rb'
