@@ -99,6 +99,21 @@ def collectMetrics()
 				$log.error "Unable to get power usage for #{node} via method #{node_config['method']}"
 				power = 0.0
 			end
+                when "fake"
+                        if not $CONFIG['methods'].key?("fake") or not $CONFIG['methods']['fake'].key?("min") or not $CONFIG['methods']['fake'].key?("max") ; then
+                                $log.error "Error - fake collection method not configured correctly."
+                                next
+                        end
+
+                        min_power = (node_config.key?('fake') and node_config['fake'].key?('min') ? node_config['fake']['min'] : $CONFIG['methods']['fake']['min'])
+                        max_power = (node_config.key?('fake') and node_config['fake'].key?('max') ? node_config['fake']['max'] : $CONFIG['methods']['fake']['max'])
+
+                        power = FakePower.getPower(min_power, max_power)
+
+                        if power.nil? ; then
+                                $log.error "Unable to get power usage for #{node} via method #{node_config['method']}"
+                                power = 0.0
+                        end
         	else
                 	$log.error "Unknown power collection method #{node_config['method']} for #{node}"
 	                next
@@ -124,7 +139,11 @@ def collectMetrics()
 			else
 				case node_config['scheduler']
                                 when "noop"
-                                        state = nil
+                                        if node_config.key?('state') and (node_config['state'] == "idle" or node_config['state'] == "allocated") ; then
+                                                state = node_config['state']
+                                        else
+                                                state = nil
+                                        end
 				when "slurm"
 					if slurm_nodes.nil? or not slurm_nodes.key?(node) ; then
 						$log.error "Unable to determine state of #{node}"

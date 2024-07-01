@@ -9,6 +9,7 @@
   # IP address used for selected collection method.
   # snmpv2 or ipmi require the a correctly configured BMC interface.
   # ipmitool requires passwordless SSH from the service user.
+  # fake does not require setting the host.
   host: [ip address]
 
   # The type of node.
@@ -19,7 +20,11 @@
 
   # Only required for compute type.
   # Must match a valid scheduler configured and enabled in config.yaml
-  scheduler: [slurm|gridengine|pbs|openstack]
+  scheduler: [noop|slurm|gridengine|pbs|openstack]
+
+  # Only required when using the noop scheduler
+  # Allows you to set a specific state for compute nodes when using the noop scheduler.
+  state: [idle|allocated]
 
   # Only required for Openstack.
   # Must match a valid Openstack cloud configured and enabled in config.yaml
@@ -49,6 +54,11 @@
   # Optional: override the default snmpv3 user when using the snmpv3 collection method.
   snmpv3:
     username: [snmpv3 user]
+
+  # Optional: override the min and max power when using the fake power collection method.
+  fake:
+    min: 100
+    max: 500
 
 # Below are a number of example configurations:
 

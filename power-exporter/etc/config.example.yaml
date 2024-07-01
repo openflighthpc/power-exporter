@@ -53,6 +53,10 @@ methods:
   # Default snmpv3 user
   snmpv3:
     username: admin
+  # Fake power usage (development)
+  fake:
+    min: 100 # min power
+    max: 500 # max power
 logging:
   # Path to log file
   path: log/power-exporter.log
