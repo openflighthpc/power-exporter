@@ -60,6 +60,11 @@
     min: 100
     max: 500
 
+  # Optional: override the default idrac username and password when using the idrac collection method.
+  idrac:
+    username: [bmc username]
+    password: [bmc password]
+
 # Below are a number of example configurations:
 
 # Example core node configured to use snmpv2

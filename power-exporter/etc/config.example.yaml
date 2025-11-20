@@ -57,6 +57,9 @@ methods:
   fake:
     min: 100 # min power
     max: 500 # max power
+  idrac:
+    username: admin
+    password: admin
 logging:
   # Path to log file
   path: log/power-exporter.log

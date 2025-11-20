@@ -99,6 +99,21 @@ def collectMetrics()
 				$log.error "Unable to get power usage for #{node} via method #{node_config['method']}"
 				power = 0.0
 			end
+                when "idrac"
+                        if not $CONFIG['methods']['idrac'].key?('username') or not $CONFIG['methods']['idrac'].key?('password') ; then
+                                $log.error "Error - idrac collection method not configured correctly."
+                                next
+                        end
+
+                        redfish_username = (node_config.key?('idrac') and node_config['idrac'].key?('username')) ? node_config['idrac']['username'] : $CONFIG['methods']['idrac']['username']
+                        redfish_password = (node_config.key?('idrac') and node_config['idrac'].key?('password')) ? node_config['idrac']['password'] : $CONFIG['methods']['idrac']['password']
+
+                        power = IDRACRedfish.getPower(node_config['host'], redfish_username, redfish_password)
+
+                        if power.nil? ; then
+                                $log.error "Unable to get power usage for #{node} via method #{node_config['method']}"
+                                power = 0.0
+                        end
                 when "fake"
                         if not $CONFIG['methods'].key?("fake") or not $CONFIG['methods']['fake'].key?("min") or not $CONFIG['methods']['fake'].key?("max") ; then
                                 $log.error "Error - fake collection method not configured correctly."
