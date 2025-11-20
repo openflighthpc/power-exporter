@@ -24,7 +24,7 @@ module SLURM
 			else
 				sinfo_output.each_line do |line|
 					node = line.split[0]
-					state = line.split[1]
+                                        state = line.split[1].gsub!(/\W/,'')
 
 					if ALLOCATED_STATES.include?(state) ; then
 						state = "allocated"
