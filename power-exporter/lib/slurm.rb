@@ -4,7 +4,7 @@ require 'json'
 
 module SLURM
 
-	ALLOCATED_STATES=["allocated", "completing", "draining", "mixed", "failing"]
+	ALLOCATED_STATES=["allocated", "completing", "draining", "mixed", "failing", "mixed-"]
 
 	def self.getNodes(schedulers)
 		nodes = {}
@@ -24,7 +24,7 @@ module SLURM
 			else
 				sinfo_output.each_line do |line|
 					node = line.split[0]
-                                        state = line.split[1].gsub!(/\W/,'')
+                                        state = line.split[1]
 
 					if ALLOCATED_STATES.include?(state) ; then
 						state = "allocated"
