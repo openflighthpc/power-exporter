@@ -36,7 +36,7 @@ module IDRACRedfish
                         res = http.request(req)
                         json = JSON.parse(res.body)
 
-                        power = json['PowerControl'][0]['PowerConsumedWatts']
+                        power = json['PowerControl'][0]['PowerMetrics']['AverageConsumedWatts']
                         return power
                 rescue
                         return nil
